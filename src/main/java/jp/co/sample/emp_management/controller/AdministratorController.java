@@ -111,6 +111,8 @@ public class AdministratorController {
 			return toLogin();
 		}
 		
+		session.setAttribute("administratorName", administrator.getName());
+		
 		
 		return "forward:/employee/showList";
 	}

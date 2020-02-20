@@ -71,6 +71,10 @@ public class AdministratorController {
 	 */
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form,BindingResult result) {
+		if(!(form.getPassword().equals(form.getPassword2()))) {
+			FieldError fieldError2 = new FieldError(result.getObjectName(), "password2", "パスワードが同じではありません。");
+			result.addError(fieldError2);
+		}
 		
 		Administrator admin = administratorService.findByMailAddress(form.getMailAddress());
 		if(admin != null) {

@@ -92,4 +92,24 @@ public class EmployeeController {
 		employeeService.update(employee);
 		return "redirect:/employee/showList";
 	}
+	
+	@RequestMapping("/findByName")
+	public String findByName(Model model,String inputName) {
+		
+		List<Employee> employeeList = employeeService.findByName(inputName);
+		if(employeeList.size() == 0) {
+			model.addAttribute("notFoundMessage", "1件も見つかりませんでした");
+			model.addAttribute("employeeList", employeeService.showList());
+			return "employee/FoundByNameList";
+		}
+		
+		if(inputName.equals("")) {
+			model.addAttribute("employeeList", employeeService.showList());
+			return "employee/FoundByNameList";
+		}else {
+			model.addAttribute("employeeList", employeeService.findByName(inputName));
+			return "employee/FoundByNameList";
+		}
+		
+	}
 }

@@ -3,7 +3,6 @@ package jp.co.sample.emp_management.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,8 +29,6 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	
-	@Autowired
-	private HttpSession session;
 	
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
@@ -61,7 +58,7 @@ public class EmployeeController {
 		for(int i = 1; i <= pageNumForSearch + 1; i++) {
 			pageNumForSearchList.add(i);
 		}
-		session.setAttribute("pageNumForSearchList", pageNumForSearchList);
+		model.addAttribute("pageNumForSearchList", pageNumForSearchList);
 		
 		List<Employee> employeeList = employeeService.showList();
 		model.addAttribute("employeeList", employeeList);
@@ -108,6 +105,13 @@ public class EmployeeController {
 		return "redirect:/employee/showList";
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @param model
+	 * @param inputName
+	 * @return
+	 */
 	@RequestMapping("/findByName")
 	public String findByName(Model model,String inputName) {
 		
@@ -124,6 +128,14 @@ public class EmployeeController {
 	
 	@RequestMapping("/paging")
 	public String paging(String page,Model model) {
+		List<Integer> pageNumForSearchList = new ArrayList<>();
+		int pageNumForSearch = employeeService.showList().size() / 10;
+		for(int i = 1; i <= pageNumForSearch + 1; i++) {
+			pageNumForSearchList.add(i);
+		}
+		model.addAttribute("pageNumForSearchList", pageNumForSearchList);
+		
+		
 		int pageInt = Integer.parseInt(page);
 		List<Employee> employeeList = employeeService.findAllEach10(pageInt);
 		

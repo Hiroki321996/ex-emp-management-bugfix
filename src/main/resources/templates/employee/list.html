@@ -105,7 +105,7 @@
 		</div>
 	</div>
 	<div>
-		<span th:each="pageNum:${session.pageNumForSearchList}" >
+		<span th:each="pageNum:${pageNumForSearchList}" >
 		<a th:href="@{'/employee/paging?page=' + ${pageNum}}"><span th:text="${pageNum}"></span></a>
 		</span>
 	</div>

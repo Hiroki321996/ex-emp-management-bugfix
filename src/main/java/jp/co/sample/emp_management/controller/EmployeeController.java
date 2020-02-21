@@ -106,11 +106,11 @@ public class EmployeeController {
 	}
 	
 	/**
+	 * 名前で従業員情報を検索した上で、従業員リストを出力します.
 	 * 
-	 * 
-	 * @param model
-	 * @param inputName
-	 * @return
+	 * @param model リクエストスコープ
+	 * @param inputName 入力された名前
+	 * @return　従業員リストのページ
 	 */
 	@RequestMapping("/findByName")
 	public String findByName(Model model,String inputName) {
@@ -126,6 +126,13 @@ public class EmployeeController {
 		
 	}
 	
+	/**
+	 * 従業員を10人ごとに区切って従業員リストを出力します.
+	 * 
+	 * @param page ページ数
+	 * @param model リクエストスコープ
+	 * @return　従業員リストページ
+	 */
 	@RequestMapping("/paging")
 	public String paging(String page,Model model) {
 		List<Integer> pageNumForSearchList = new ArrayList<>();

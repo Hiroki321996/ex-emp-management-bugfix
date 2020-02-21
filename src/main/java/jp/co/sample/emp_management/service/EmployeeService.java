@@ -53,7 +53,23 @@ public class EmployeeService {
 		employeeRepository.update(employee);
 	}
 	
+	/**
+	 * 従業員情報を名前で取得します.
+	 * 
+	 * @param name 名前
+	 * @return　名前で曖昧検索した従業員情報
+	 */
 	public List<Employee> findByName(String name){
 		return employeeRepository.findByName(name);
+	}
+	
+	/**
+	 * 10人区切りの従業員情報を取得します.
+	 * 
+	 * @param pageNumForSearch ページ数
+	 * @return 10人の従業員情報
+	 */
+	public List<Employee> findAllEach10(int pageNumForSearch){
+		return employeeRepository.findAllEach10(pageNumForSearch);
 	}
 }

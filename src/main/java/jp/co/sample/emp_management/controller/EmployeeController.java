@@ -1,6 +1,9 @@
 package jp.co.sample.emp_management.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,9 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	
+	@Autowired
+	private HttpSession session;
+	
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
 	 * 
@@ -36,6 +42,8 @@ public class EmployeeController {
 	public UpdateEmployeeForm setUpForm() {
 		return new UpdateEmployeeForm();
 	}
+	
+	
 
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員一覧を表示する
@@ -48,6 +56,13 @@ public class EmployeeController {
 	 */
 	@RequestMapping("/showList")
 	public String showList(Model model) {
+		List<Integer> pageNumForSearchList = new ArrayList<>();
+		int pageNumForSearch = employeeService.showList().size() / 10;
+		for(int i = 1; i <= pageNumForSearch + 1; i++) {
+			pageNumForSearchList.add(i);
+		}
+		session.setAttribute("pageNumForSearchList", pageNumForSearchList);
+		
 		List<Employee> employeeList = employeeService.showList();
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";
@@ -105,5 +120,14 @@ public class EmployeeController {
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";
 		
+	}
+	
+	@RequestMapping("/paging")
+	public String paging(String page,Model model) {
+		int pageInt = Integer.parseInt(page);
+		List<Employee> employeeList = employeeService.findAllEach10(pageInt);
+		
+		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
 	}
 }

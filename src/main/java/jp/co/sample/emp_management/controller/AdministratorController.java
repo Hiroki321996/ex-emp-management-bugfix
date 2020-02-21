@@ -1,5 +1,8 @@
 package jp.co.sample.emp_management.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
@@ -16,6 +19,7 @@ import jp.co.sample.emp_management.domain.Administrator;
 import jp.co.sample.emp_management.form.InsertAdministratorForm;
 import jp.co.sample.emp_management.form.LoginForm;
 import jp.co.sample.emp_management.service.AdministratorService;
+import jp.co.sample.emp_management.service.EmployeeService;
 
 /**
  * 管理者情報を操作するコントローラー.
@@ -29,6 +33,9 @@ public class AdministratorController {
 
 	@Autowired
 	private AdministratorService administratorService;
+	
+	@Autowired 
+	private EmployeeService employeeService;
 	
 	@Autowired
 	private HttpSession session;
@@ -123,6 +130,8 @@ public class AdministratorController {
 		}
 		
 		session.setAttribute("administratorName", administrator.getName());
+		
+
 		
 		
 		return "forward:/employee/showList";

@@ -95,12 +95,19 @@
 						</tr>
 					</tbody>
 				</table>
+				
+				
 
 
 <!-- ここから下を編集する必要はありません -->
 
 			</div>
 		</div>
+	</div>
+	<div>
+		<span th:each="pageNum:${session.pageNumForSearchList}" >
+		<a th:href="@{'/employee/paging?page=' + ${pageNum}}"><span th:text="${pageNum}"></span></a>
+		</span>
 	</div>
 	<!-- end container -->
 	

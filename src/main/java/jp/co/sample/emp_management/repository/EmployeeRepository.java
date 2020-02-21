@@ -50,7 +50,7 @@ public class EmployeeRepository {
 	 * @return 全従業員一覧 従業員が存在しない場合はサイズ0件の従業員一覧を返します
 	 */
 	public List<Employee> findAll() {
-		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees ORDER BY hire_date ;";
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees ORDER BY hire_date DESC;";
 
 		List<Employee> developmentList = template.query(sql, EMPLOYEE_ROW_MAPPER);
 
@@ -84,9 +84,28 @@ public class EmployeeRepository {
 		template.update(updateSql, param);
 	}
 	
+	/**
+	 * 引数でもらった名前でemployeesテーブルから曖昧検索を行います.
+	 * 
+	 * @param name　名前
+	 * @return 引数の名前で曖昧検索した結果。従業員情報
+	 */
 	public List<Employee> findByName(String name){
-		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees WHERE  name LIKE :name";
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees WHERE  name LIKE :name ORDER BY hire_date DESC";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+		
+		return template.query(sql, param,EMPLOYEE_ROW_MAPPER);
+	}
+	
+	/**
+	 * もらったページ数で区切った10人分の従業員情報を検索します.
+	 * 
+	 * @param page ページ数
+	 * @return　従業員情報
+	 */
+	public List<Employee> findAllEach10(int pageNumForSearch){
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees ORDER BY hire_date DESC LIMIT 10 OFFSET :page; ";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("page", (pageNumForSearch - 1) * 10 );
 		
 		return template.query(sql, param,EMPLOYEE_ROW_MAPPER);
 	}

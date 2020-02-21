@@ -56,16 +56,10 @@
 			<li class="active"><a href="list.html" th:href="@{/employee/showList}">従業員リスト</a></li>
 		</ol>
 		<form th:action="@{/employee/findByName}" method="post">
-<<<<<<< HEAD
 			従業員検索:<input type="text" name="inputName" id="inputName">
 			<button>検索</button>
 		</form><br>
 		<span th:text="${notFoundMessage}" style="color: red"></span>
-=======
-			従業員検索:<input type="text" name="inputName">
-			<button>検索</button>
-		</form>
->>>>>>> 892cc9cc535e3f83c6314cca27aee6bcf3c26134
 		
 		
 		<!-- table -->

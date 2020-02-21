@@ -99,17 +99,11 @@ public class EmployeeController {
 		List<Employee> employeeList = employeeService.findByName(inputName);
 		if(employeeList.size() == 0) {
 			model.addAttribute("notFoundMessage", "1件も見つかりませんでした");
-			model.addAttribute("employeeList", employeeService.showList());
-			return "employee/FoundByNameList";
+			return showList(model);
 		}
 		
-		if(inputName.equals("")) {
-			model.addAttribute("employeeList", employeeService.showList());
-			return "employee/FoundByNameList";
-		}else {
-			model.addAttribute("employeeList", employeeService.findByName(inputName));
-			return "employee/FoundByNameList";
-		}
+		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
 		
 	}
 }

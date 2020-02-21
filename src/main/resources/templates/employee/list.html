@@ -70,6 +70,11 @@
 <!-- ここから上を編集する必要はありません -->
 
 <!-- ここにモックのtable要素を貼り付けます -->
+	<div>
+		<span th:each="pageNum:${pageNumForSearchList}" >
+		<a th:href="@{'/employee/paging?page=' + ${pageNum}}"><span th:text="${pageNum}"></span></a>
+		</span>
+	</div>
 
 				<table class="table table-striped">
 					<thead>
@@ -104,11 +109,7 @@
 			</div>
 		</div>
 	</div>
-	<div>
-		<span th:each="pageNum:${pageNumForSearchList}" >
-		<a th:href="@{'/employee/paging?page=' + ${pageNum}}"><span th:text="${pageNum}"></span></a>
-		</span>
-	</div>
+
 	<!-- end container -->
 	
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

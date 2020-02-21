@@ -58,7 +58,8 @@
 		<form th:action="@{/employee/findByName}" method="post">
 			従業員検索:<input type="text" name="inputName">
 			<button>検索</button>
-		</form>
+		</form><br>
+		<span th:text="${notFoundMessage}" style="color: red"></span>
 		
 		
 		<!-- table -->
